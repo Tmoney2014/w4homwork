@@ -1,0 +1,13 @@
+package shop.betabeta.week03;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class W3HomeWorkApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(W3HomeWorkApplication.class, args);
+    }
+
+}
