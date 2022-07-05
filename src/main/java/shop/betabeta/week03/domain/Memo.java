@@ -2,6 +2,7 @@ package shop.betabeta.week03.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sun.security.util.Password;
 
 import javax.persistence.*;
 
@@ -14,23 +15,36 @@ public class Memo extends Timestamped { // 생성,수정 시간을 자동으로 
     private Long id;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String contents;
 
-    public Memo(String username, String contents) {
+    @Column(nullable = false)
+    private Long password;
+
+
+    public Memo(String title, String username, String contents, Long password) {
+        this.title = title;
         this.username = username;
         this.contents = contents;
+        this.password = password;
     }
 
     public Memo(MemoRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.password = requestDto.getPassword();
     }
 
     public void update(MemoRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.password = requestDto.getPassword();
     }
 }
