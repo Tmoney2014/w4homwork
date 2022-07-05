@@ -32,10 +32,13 @@ public class MemoController {
     @DeleteMapping("/api/memos/{id}")
     public Long deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
         Optional<Memo> memo = memoRepository.findById(id);
-        if (memo.get().getPassword().equals(requestDto.getPassword())) {
-            memoRepository.deleteById(id);
-        } else {
-            System.out.println("비밀번호 불일치");
+        if (memo.isPresent()) {
+            if (memo.get().getPassword().equals(requestDto.getPassword())) {
+                memoRepository.deleteById(id);
+            } else {
+                System.out.println("비밀번호 불일치");
+            }
+
         }
         return id;
     }
@@ -43,11 +46,15 @@ public class MemoController {
     @PutMapping("/api/memos/{id}")
     public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
         Optional<Memo> memo = memoRepository.findById(id);
-        if (memo.get().getPassword().equals(requestDto.getPassword())) {
-            memoService.update(id, requestDto);
-        } else {
-            System.out.println("비밀번호 오류");
+        if (memo.isPresent()) {
+            if (memo.get().getPassword().equals(requestDto.getPassword())) {
+                memoService.update(id, requestDto);
+            } else {
+                System.out.println("비밀번호 오류");
+            }
+
         }
+
         return id;
 
     }
