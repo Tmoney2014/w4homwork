@@ -6,7 +6,7 @@ import shop.betabeta.week03.domain.Memo;
 import shop.betabeta.week03.domain.MemoRepository;
 import shop.betabeta.week03.domain.MemoRequestDto;
 import shop.betabeta.week03.service.MemoService;
-import sun.security.util.Password;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,13 @@ public class MemoController {
         return memoRepository.findAllByOrderByModifiedAtDesc();
     }
 
+    @GetMapping("/api/memos/{id}")
+    public Memo getDetail(@PathVariable Long id) {
+        return memoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("메모를 찾을수 없습니다.")
+        );
+    }
+
     @DeleteMapping("/api/memos/{id}")
     public Long deleteMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
         Optional<Memo> memo = memoRepository.findById(id);
@@ -36,7 +43,8 @@ public class MemoController {
             if (memo.get().getPassword().equals(requestDto.getPassword())) {
                 memoRepository.deleteById(id);
             } else {
-                System.out.println("비밀번호 불일치");
+                System.out.println("비밀번호 불일치.");
+                throw new IllegalArgumentException("비밀번호 불일치.");
             }
 
         }
@@ -50,7 +58,8 @@ public class MemoController {
             if (memo.get().getPassword().equals(requestDto.getPassword())) {
                 memoService.update(id, requestDto);
             } else {
-                System.out.println("비밀번호 오류");
+                System.out.println("비밀번호 오류.");
+                throw new IllegalArgumentException("비밀번호 오류.");
             }
 
         }
