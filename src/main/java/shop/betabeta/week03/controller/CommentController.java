@@ -28,7 +28,7 @@ public class CommentController {
     }
     @GetMapping("/api/comment/{memoid}")
     public List<Comment> getComment(@PathVariable Long memoid) {
-        return commentRepository.findAllByMemoIdOrderByModifiedAtDesc(memoid);
+        return commentRepository.findAllByMemoidOrderByModifiedAtDesc(memoid);
 
     }
 //로그인을 하지 않으면 애초에 API 에 접근이 불가능 하지만, 만약 로그인을 하고 사람의 코멘트ID를 URL에 직접 입력하여
